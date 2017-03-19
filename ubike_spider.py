@@ -26,7 +26,7 @@ class UbikeManager(object):
             Use googleapis to check location information and 
             the correctness of lat, lng .
         '''
-        rsp = get('https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={key}'.format(lat=lat, lng=lng, key=os.environ(['API_KEY'])))
+        rsp = get('https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={key}'.format(lat=lat, lng=lng, key=os.environ['API_KEY']))
         rsp_json = rsp.json()
         status = rsp_json['status']
         if status != 'OK':
