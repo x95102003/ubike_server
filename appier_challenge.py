@@ -48,5 +48,5 @@ if __name__ == "__main__":
     backcrawl = threading.Thread(target=UBM.update_num)
     backcrawl.daemon = True
     backcrawl.start()
-    app.run(port=1234, debug=True)
+    app.run(port=1234)
 
