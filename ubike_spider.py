@@ -43,7 +43,7 @@ class UbikeManager(object):
             Check the ubike station is full or not.
             Raise exception when full.
         '''
-        ubike_full = all(v['num_empty'] > 0 for v in self.crawl_data.values())
+        ubike_full = all(v['num_empty'] == 0 for v in self.crawl_data.values())
         for i, v in self.crawl_data.items():
             print i, v['num_empty']
         if ubike_full == 0:
@@ -66,6 +66,7 @@ class UbikeManager(object):
             near_station.append(Order)
             if len(near_station) == 2:
                 return (0, json.dumps(near_station, ensure_ascii=False,indent=-1))
+        return [0, nearest]
 
     def crawl_ubikes(self):
         '''
