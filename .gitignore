@@ -1,0 +1,6 @@
+# secret key
+secret.py
+secret.pyc
+
+# module file
+*.pyc
