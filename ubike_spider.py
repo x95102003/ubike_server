@@ -46,7 +46,7 @@ class UbikeManager(object):
         ubike_full = all(v['num_empty'] == 0 for v in self.crawl_data.values())
         for i, v in self.crawl_data.items():
             print i, v['num_empty']
-        if ubike_full == 0:
+        if ubike_full:
             raise UbikeError(1)
 
     def get_neighbor(self, lat, lng): 
