@@ -92,7 +92,7 @@ class UbikeManager(object):
         '''
         while True:
             print "Update_data"
-            print cls.crawl_data
+#            print cls.crawl_data
             time.sleep(45) 
             rep = get(cls.api_url)
             if rep.status_code != 200:
