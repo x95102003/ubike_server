@@ -7,7 +7,6 @@ import json
 import utils
 from ubike_exception import UbikeError
 import os
-#from boto.s3.connection import S3Connection
 import time
 
 class UbikeManager(object):
@@ -15,8 +14,7 @@ class UbikeManager(object):
         Data that could share for other thread or process.
     '''
     crawl_data = defaultdict(dict) 
-    api_url = 'http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=ddb80380-f1b3-4f8e-8016-7ed9cba571d5'
-
+    api_url = 'http://data.taipei/youbike' 
     def __init__(self):
         '''Init the crawl_data'''
         self.crawl_ubikes()
@@ -46,6 +44,8 @@ class UbikeManager(object):
         ubike_full = all(v['num_empty'] == 0 for v in self.crawl_data.values())
         for i, v in self.crawl_data.items():
             print i, v['num_empty']
+            if v['num_empty']:
+                print v['sna']
         if ubike_full:
             raise UbikeError(1)
 
@@ -62,11 +62,14 @@ class UbikeManager(object):
         for idx in sort_dict:
             print self.crawl_data[idx]['sna']
         for idx in sort_dict:
-            Order = {'station':self.crawl_data[idx]['sna'], 'num_ubike':self.crawl_data[idx]['num_ubike']}
+            Order = OrderedDict((
+                ('station', self.crawl_data[idx]['sna']),
+                ('num_ubike', self.crawl_data[idx]['num_ubike'])
+                    ))
             near_station.append(Order)
             if len(near_station) == 2:
-                return (0, json.dumps(near_station, ensure_ascii=False,indent=-1))
-        return [0, nearest]
+                return 0, near_station
+#                return (0, json.dumps(near_station, ensure_ascii=False,indent=-1))
 
     def crawl_ubikes(self):
         '''
@@ -76,8 +79,8 @@ class UbikeManager(object):
         if rep.status_code != 200:
             raise UbikeError(3)
         rep_json = rep.json() 
-        for v in rep_json['result']['results']:
-            self.crawl_data[v['_id']].update({
+        for idx, v in rep_json['retVal'].items():
+            self.crawl_data[idx].update({
                 'sna': v['sna'].encode('utf-8'),
                 'num_ubike': int(v['sbi']),
                 'num_empty': int(v['bemp']),
@@ -99,9 +102,9 @@ class UbikeManager(object):
             if rep.status_code != 200:
                 raise UbikeError(3)
             rep_json = rep.json()
-            for v in rep_json['result']['results']:
-                cls.crawl_data[v['_id']]['num_ubike'] = int(v['sbi'])
-                cls.crawl_data[v['_id']]['num_empty'] = int(v['bemp'])
+            for i, v in rep_json['retVal'].items():
+                cls.crawl_data[i]['num_ubike'] = int(v['sbi'])
+                cls.crawl_data[i]['num_empty'] = int(v['bemp'])
 
 if __name__ == "__main__":
     ubm = UbikeManager()

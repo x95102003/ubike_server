@@ -5,6 +5,7 @@ from flask import Flask, jsonify, url_for, request
 import ubike_spider
 import os
 import threading
+import json
 from ubike_exception import UbikeError
 app = Flask(__name__)
 
@@ -33,6 +34,7 @@ def respon(error, result=None):
     '''
         Use to return json file.
     '''
+    print type(result)
     if not result:
         result = []
     resp = {
