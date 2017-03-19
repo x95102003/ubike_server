@@ -1,1 +1,1 @@
-worker: python appier_challenge.py
+web: gunicorn gettingstarted.wsgi --log-file -
