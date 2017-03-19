@@ -1,1 +1,1 @@
-web: python appier_challenge.py
+worker: python appier_challenge.py
