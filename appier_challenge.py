@@ -3,6 +3,7 @@
 
 from flask import Flask, jsonify, url_for, request
 import ubike_spider
+import os
 import threading
 from ubike_exception import UbikeError
 app = Flask(__name__)
