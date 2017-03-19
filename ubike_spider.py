@@ -4,9 +4,10 @@
 from requests import post, get
 from collections import defaultdict, OrderedDict
 import json 
-import secret
 import utils
 from ubike_exception import UbikeError
+import os
+#from boto.s3.connection import S3Connection
 import time
 
 class UbikeManager(object):
@@ -25,7 +26,7 @@ class UbikeManager(object):
             Use googleapis to check location information and 
             the correctness of lat, lng .
         '''
-        rsp = get('https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={key}'.format(lat=lat, lng=lng, key=secret.key))
+        rsp = get('https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lng}&key={key}'.format(lat=lat, lng=lng, key=os.environ(['API_KEY'])))
         rsp_json = rsp.json()
         status = rsp_json['status']
         if status != 'OK':
