@@ -1,9 +1,9 @@
-#Ubike Backend Server
+# Ubike Backend Server
 
-##Description
+## Description
 A HTTP API to find 2 nearest ubike station based on latitude and longitude in request parameters.
 
-##Query Format
+## Query Format
 
 /v1/ubike-station/taipei
 
@@ -12,7 +12,7 @@ A HTTP API to find 2 nearest ubike station based on latitude and longitude in re
 	* lat: latitude of location
 	* lng: longitude of location
 
-##Spec and Error Handling:
+## Spec and Error Handling:
 > for any location not in Taipie City, please return error code -2.
 
 > please handle error/exceptions with following scenarios (and return coressponding error codes)
