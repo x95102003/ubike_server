@@ -1,1 +1,1 @@
-web: python appier_chanllege.py
+web: python appier_challenge.py
